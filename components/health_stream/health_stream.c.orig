@@ -1,0 +1,723 @@
+/*******************************************************************************************************
+ *
+ *
+ *
+ *
+ *
+ * *****************************************************************************************************/
+#include "string.h"
+
+#include "esp_system.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+
+#include "esp_err.h"
+#include "esp_log.h"
+#include "esp_ota_ops.h"
+#include "esp_wifi.h"
+#include "health_board.h"
+#include "health_hw.h"
+#include "health_hw_uart.h"
+#include "health_ota.h"
+#include "health_comm.h"
+#include "health_comm_protocol.h"
+#include "health_tcp.h"
+
+#include "health_stream.h"
+
+
+
+#define MAX_SENSOR_DTYPES  16
+#define ECGA_TYPES    MAX_SENSOR_DTYPES
+
+#define MAX_STREAM_DTYPES  (ECGA_TYPES+1)
+
+#define PACK_SAMPLES 100
+#define MAX_TDATA_LENGTH ((PACK_SAMPLES*3)/2+1)
+#define MAX_TDATA_LENGTH_24B (PACK_SAMPLES*3+1)
+
+#define MAX_STREAM_TX_LEN  (MAX_TDATA_LENGTH_24B +5)  /*1 Start+1CMD+1DLEN+MAX_TDATA+2CRC*/
+
+const esp_partition_t * ota_partition;
+esp_ota_handle_t ota_handle;
+uint8_t *otabuf = NULL;
+uint8_t ota_end_ind = 0;
+
+
+static const char *FEELKIT_TAG = "FeelKit_Stream";
+
+
+
+unsigned char *StreamPacket[MAX_SENSOR_DTYPES ]; //mmedStreamCnt[MAX_MMED_TYPES] ;
+static unsigned char sampleCNT[MAX_SENSOR_DTYPES ]  ,stream_seq[MAX_SENSOR_DTYPES ] ;
+
+static __stream_state cur_sstate =0;
+static uint8_t cur_stream_ch = 0;
+static hsensor_comm_handle_t handle_comms[3];
+static bio_sensor_status sensor_status, AdcFunType ;
+
+void process_comm_cmd(hdata_type_t scmd)
+{
+	uint8_t *cmdframe = (uint8_t *)(scmd.pdata);
+	if(cmdframe[0] != cmdframe[cmdframe[2]+3])
+	{
+		generalRspFrame( handle_comms[scmd.type],cmdframe[HCP_RX_CMD],sensor_status,RSP_ERROR_CRC);
+		return;
+	}
+
+	switch (cur_sstate)
+	{
+
+	case IDLE_STATE:
+	{
+		switch(cmdframe[HCP_RX_CMD])
+		{
+		case DATA_STREAMING_COMMAND:    // Data streaming
+		{
+			if(sensor_status == BIO_NORMAL)
+			{
+				AdcFunType = cmdframe[4];
+
+				if(AdcFunType != REG_FUN1_ECG_AII)
+					sensor_fun_setup(cmdframe[4],cmdframe[3]);
+				sensor_fun_run(OBEY_MODE | M_FUN_START,AdcFunType);
+				cur_sstate = DATA_STREAMING_STATE;  // Set to Live Streaming state
+
+				generalRspFrame( handle_comms[scmd.type],cmdframe[HCP_RX_CMD],sensor_status,RSP_OK);
+				cur_stream_ch = scmd.type;
+
+			}
+			else
+				generalRspFrame( handle_comms[scmd.type],cmdframe[HCP_RX_CMD],sensor_status,RSP_ERROR_STATUS);
+
+
+		}
+		break;
+		case FIRMWARE_UPGRADING_DATA:
+		{
+
+			if(cmdframe[3] == BL_CMD_SENSOR_UPGRADE_REQ )
+			{
+				if(sensor_status == BIO_BOOTL)
+				{
+					//health_write_reg(RegNum_Fun2,  BL_CMD_SENSOR_UPGRADE_REQ);
+					cur_stream_ch = scmd.type;
+					cur_sstate =  SENSOR_FW_UPGRADING_STATE;  // Set to firmware UPGRADING state
+					sensor_fun_fwupgrade(1);
+
+
+				}
+				else
+					generalRspFrame( handle_comms[scmd.type],cmdframe[HCP_RX_CMD],cmdframe[3] ,RSP_ERROR_STATUS);
+
+			}
+			else  if(cmdframe[3] == BL_CMD_OTA_REQ)
+			{
+				ota_partition = health_ota_init(&ota_handle );
+				if(ota_partition)
+				{
+					otabuf = (uint8_t*)malloc(HOTA_BUFFSIZE+1);
+					if(otabuf)
+					{
+						generalRspFrame( handle_comms[scmd.type],cmdframe[HCP_RX_CMD],cmdframe[3],RSP_OK);
+
+						cur_stream_ch = scmd.type;
+						cur_sstate =  OTA_STATE;  // Set to ota state
+					}
+					else
+						generalRspFrame( handle_comms[scmd.type],cmdframe[HCP_RX_CMD],cmdframe[3],RSP_ERROR_NOMEM);
+
+				}
+				else
+					generalRspFrame( handle_comms[scmd.type],cmdframe[HCP_RX_CMD],cmdframe[3],RSP_ERROR_STATUS);
+
+			}
+			else
+				generalRspFrame( handle_comms[scmd.type],cmdframe[HCP_RX_CMD],sensor_status,RSP_ERROR_UNKNOW);
+
+
+		}
+		break;
+
+		case READ_REG_COMMAND:     // RAW DATA DUMP
+		{
+			uint8_t rdata;
+			health_read_reg(cmdframe[HCP_RX_DATA], &rdata);
+			generalRspFrame( handle_comms[scmd.type],cmdframe[HCP_RX_CMD],cmdframe[HCP_RX_DATA],rdata);
+		}
+		break;
+
+		case WRITE_REG_COMMAND:     // RAW DATA DUMP
+		{
+			health_write_reg(cmdframe[HCP_RX_DATA], cmdframe[HCP_RX_DATA+1]);
+			generalRspFrame( handle_comms[scmd.type],cmdframe[HCP_RX_CMD],0,RSP_OK);
+		}
+		break;
+case ON_HSENSOR_COMMAND:
+	if(cmdframe[HCP_RX_DATA] == 0)
+		BioSensorPowerOn(0);
+		else
+			{
+				BioSensorPowerOn(0);
+				vTaskDelay(500/portTICK_RATE_MS );
+				BioSensorPowerOn(1);
+			}
+					generalRspFrame( handle_comms[scmd.type],cmdframe[HCP_RX_CMD],cmdframe[HCP_RX_DATA],RSP_OK);
+
+
+	break;
+
+		case RESTART_COMMAND:  // firmware Version request
+		{
+
+			if(cmdframe[3] == FWUPGRADE_RST)
+			{
+				BioSensorPowerOn(0);
+				BioSensor_HW_FwGradeDisable(0,0);
+
+				vTaskDelay(200/portTICK_RATE_MS );
+				BioSensorPowerOn(1);
+				vTaskDelay(600/portTICK_RATE_MS );
+				BioSensor_HW_FwGradeDisable(1,1);
+				//  health_write_reg( RST_MODE,FWUP_PWD);
+
+			}
+			if(cmdframe[3] == NORMAL_RST)
+			{
+				//health_write_reg( RST_MODE,RESET_PWD);
+				// BioSensor_HW_FwGradeDisable(1);
+				BioSensorPowerOn(0);
+				vTaskDelay(500/portTICK_RATE_MS );
+				BioSensorPowerOn(1);
+
+			}
+			generalRspFrame( handle_comms[scmd.type],cmdframe[HCP_RX_CMD],cmdframe[3],RSP_OK);
+
+		}
+		break;
+
+		case FIRMWARE_VERSION_REQ:  // firmware Version request
+		{
+			// if(MMDTSTRxPacket[3] == 0)
+			//      generalRspFrame(fwbl_ver,RSP_OK);
+			//   if(MMDTSTRxPacket[3] == 1)
+			//      generalRspFrame(fwap_ver,RSP_OK);
+		}
+		break;
+
+
+		case DEVICE_ID_REQ:  // firmware Version request
+		{
+			//  generalRspFrame(dev_id,RSP_OK);
+		}
+		break;
+		case STATUS_INFO_REQ:   // Status Request
+		{
+			ESP_LOGI(FEELKIT_TAG, "getBioSensorStatus begin");
+
+			sensor_status = getBioSensorStatus();
+			ESP_LOGI(FEELKIT_TAG, "getBioSensorStatus = %d",sensor_status);
+			generalRspFrame( handle_comms[scmd.type],cmdframe[HCP_RX_CMD],sensor_status,RSP_OK);
+		}
+		break;
+		case SET_WIFI_CONFIG:  // firmware Version request
+		{
+			wifi_config_t wifi_cfg;
+			memset(&wifi_cfg, 0x00, sizeof(wifi_config_t));
+			cmdframe[3+cmdframe[HCP_RX_LENGTH]] = ' ';
+			strcpy((char*)wifi_cfg.sta.ssid,strtok((char*)(cmdframe+HCP_RX_DATA)," "));
+			strcpy((char*)wifi_cfg.sta.password,strtok(NULL," "));
+			ESP_ERROR_CHECK( esp_wifi_set_storage(WIFI_STORAGE_FLASH) );
+			ESP_ERROR_CHECK( esp_wifi_disconnect() );
+			ESP_ERROR_CHECK( esp_wifi_stop() );
+			ESP_LOGI(FEELKIT_TAG, "Setting WiFi configuration SSID %s,PWD:%s", wifi_cfg.sta.ssid,wifi_cfg.sta.password);
+			ESP_ERROR_CHECK( esp_wifi_set_mode(WIFI_MODE_STA) );
+			ESP_ERROR_CHECK( esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_cfg) );
+
+			ESP_ERROR_CHECK( esp_wifi_start() );
+			generalRspFrame( handle_comms[scmd.type],cmdframe[HCP_RX_CMD],cmdframe[3],RSP_OK);
+
+		}
+		break;
+		case IPADDR_IND:
+		{
+
+			generalSendFrame(handle_comms[scmd.type],IPADDR_IND,health_tcp_getIp(),4);
+
+		}
+		break;
+
+
+		default:
+
+			break;
+		}
+	}
+	break;
+
+	case DATA_STREAMING_STATE:
+	{
+		switch(cmdframe[HCP_RX_CMD])
+		{
+
+		case DATA_STREAMING_COMMAND:
+		{
+			if(AdcFunType == cmdframe[4])
+			{
+
+				if(AdcFunType != REG_FUN1_ECG_AII)
+					sensor_fun_run(OBEY_MODE,AdcFunType);
+				cur_sstate = IDLE_STATE;    // Switch to Idle state
+			}
+
+		}
+		break;
+
+
+		default:
+
+			break;
+		}
+	}
+	break;
+
+	case SENSOR_FW_UPGRADING_STATE:
+	{
+		if(cmdframe[HCP_RX_CMD] == FIRMWARE_UPGRADING_DATA)
+		{
+
+			if(sensor_status == BIO_BOOTL)
+			{
+
+				if(cmdframe[HCP_RX_DATA] == BL_CMD_SENSOR_PROGRAM)
+				{
+
+					cmdframe[MAX_RX_LENGTH-2] ^= BL_CMD_SENSOR_PROGRAM ;
+
+					//for(uint8_t i=0;i<MAX_RDATA_LENGTH+1;i++)
+					//  health_write_reg(BL_REG_DATA,  cmdframe+4+i);
+					health_write_bytes(BL_REG_DATA, cmdframe+4, MAX_RDATA_LENGTH);
+				}
+				else
+				{
+					health_write_reg(RegNum_Fun2,  cmdframe[HCP_RX_DATA]);
+					//	if(cmdframe[HCP_RX_DATA] == BL_CMD_SENSOR_APRDY)
+					//	sensor_fun_fwupgrade(0);
+
+				}
+
+			}
+			else
+				generalRspFrame(handle_comms[scmd.type],cmdframe[HCP_RX_CMD],sensor_status,RSP_ERROR_STATUS);
+
+		}
+
+	}
+	break;
+
+	case OTA_STATE:
+	{
+		if(cmdframe[HCP_RX_CMD] == FIRMWARE_UPGRADING_DATA)
+		{
+			uint8_t rsp = RSP_ERROR_UNKNOW;
+
+			if((cmdframe[3] >= BL_CMD_OTA_DSEG0)&&(cmdframe[3] <= BL_CMD_OTA_DSEG7))
+			{
+				rsp = RSP_OK;
+				memcpy(otabuf+(cmdframe[3] - BL_CMD_OTA_DSEG0)*HOTA_FRAME_LEN,cmdframe+6,HOTA_FRAME_LEN);
+				ota_end_ind = cmdframe[4];
+
+				if(ota_end_ind == 0)
+				{
+					if(cmdframe[3] == BL_CMD_OTA_DSEG7)
+					{
+						if(health_ota_write(ota_handle,otabuf,HOTA_BUFFSIZE) != ESP_OK)
+							rsp = RSP_ERROR_UNKNOW;
+					}
+				}
+				else
+				{
+					if(health_ota_write(ota_handle,otabuf,(cmdframe[3] - BL_CMD_OTA_DSEG0 )*HOTA_FRAME_LEN+ cmdframe[2]-3) != ESP_OK)
+						rsp = RSP_ERROR_UNKNOW;
+
+					if(rsp == RSP_OK)
+					{
+						generalRspFrame(handle_comms[scmd.type],cmdframe[HCP_RX_CMD],cmdframe[3],rsp);
+						if( health_ota_complete(ota_handle,ota_partition) != ESP_OK)     //If normal, restart system!!!!!
+							rsp = RSP_ERROR_UNKNOW;
+
+					}
+
+				}
+
+			}
+
+			generalRspFrame(handle_comms[scmd.type],cmdframe[HCP_RX_CMD],cmdframe[3],rsp);
+
+			if(rsp != RSP_OK)
+			{
+
+				free(otabuf);
+				cur_sstate = IDLE_STATE;    // Switch to Idle state
+
+			}
+
+		}
+	}
+	break;
+
+
+	}
+
+}
+
+static uint8_t tmp_crc[MAX_STREAM_DTYPES];
+/*
+static void hstream_frame(sensor_data_t sdata)
+{
+    unsigned char ltype = sdata.dtype;
+    uint16_t filterd = (uint16_t)(sdata.value);
+
+
+    if(ltype < MAX_SENSOR_DTYPES)
+    {
+
+        if ( sampleCNT[ltype] > PACK_SAMPLES)
+            sampleCNT[ltype]  = 0;
+
+        if ( sampleCNT[ltype]  == 0)
+        {
+
+            tmp_crc[ltype] = 0;
+            StreamPacket[ltype] [0] =  START_DATA_HEADER;
+
+
+            StreamPacket[ltype] [1] =  (DATA_TYPE_8BIT|ltype);
+
+            StreamPacket[ltype] [2] =  MAX_TDATA_LENGTH;
+
+            stream_seq[ltype]++;
+            StreamPacket[ltype] [3] =  stream_seq[ltype];
+
+            tmp_crc[ltype] += stream_seq[ltype];
+
+        }
+
+
+        if(sampleCNT[ltype]%2)
+        {
+            StreamPacket[ltype] [3*(sampleCNT[ltype]-1)/2+6] =  ((unsigned char)filterd );
+            tmp_crc[ltype] +=  ((unsigned char)filterd );
+            StreamPacket[ltype] [3*(sampleCNT[ltype]-1)/2+5]  |=  ((unsigned char)((filterd>>4)&0xf0) );
+            tmp_crc[ltype] +=  StreamPacket[ltype] [3*(sampleCNT[ltype]-1)/2+5];
+
+        }
+        else
+        {
+            StreamPacket[ltype] [3*sampleCNT[ltype]/2+4] =  ((unsigned char)filterd );
+            tmp_crc[ltype] +=  ((unsigned char)filterd );
+            StreamPacket[ltype] [3*sampleCNT[ltype]/2+5] =  ((unsigned char)((filterd>>8)&0x0f) );
+        }
+
+        sampleCNT[ltype]++;
+
+        if ( sampleCNT[ltype] == PACK_SAMPLES)
+        {
+            sampleCNT[ltype] = 0;
+            StreamPacket[ltype] [3*PACK_SAMPLES/2+4] = ( (uint8_t)(tmp_crc[ltype]>>8));
+            StreamPacket[ltype] [3*PACK_SAMPLES/2+5] = ( (uint8_t)tmp_crc[ltype]);
+            if( handle_comms[cur_stream_ch])
+                hsensor_comm_send(handle_comms[cur_stream_ch], StreamPacket[ltype],3*PACK_SAMPLES/2+6);
+
+
+        }
+    }
+
+}
+*/
+
+static void hstream_frameWithbits(sensor_data_t *sdata,unsigned char bit_ind)
+{
+	unsigned char ltype = sdata->dtype;
+	// uint32_t filterd = sdata.value;
+
+
+	if(ltype < MAX_SENSOR_DTYPES)
+	{
+
+		if ( sampleCNT[ltype] > PACK_SAMPLES)
+			sampleCNT[ltype]  = 0;
+
+		if ( sampleCNT[ltype]  == 0)
+		{
+			uint16_t dlen = ( (PACK_SAMPLES/2)*bit_ind +1) ;
+			//   tmp_crc[ltype] = 0;
+			StreamPacket[ltype] [0] =  (START_DATA_HEADER + (unsigned char)(dlen>>8));
+			StreamPacket[ltype] [1] =  ((DATA_TYPE_DEFAULT+((bit_ind-MASK_8BIT)<<4))|ltype);
+			StreamPacket[ltype] [2] = ((unsigned char)(dlen & 0x00ff) );
+
+
+			stream_seq[ltype]++;
+			StreamPacket[ltype] [3] =  stream_seq[ltype];
+
+			tmp_crc[ltype] = stream_seq[ltype];
+
+		}
+		switch(bit_ind)
+		{
+		case MASK_12BIT:
+		{
+			if(sampleCNT[ltype]%2)
+			{
+				StreamPacket[ltype] [3*(sampleCNT[ltype]-1)/2+6] =  (sdata->dvalue[0]);
+				tmp_crc[ltype] ^=  (sdata->dvalue[0]);
+				StreamPacket[ltype] [3*(sampleCNT[ltype]-1)/2+5]  |=  ((unsigned char)(((sdata->dvalue[1])<<4)&0xf0) );
+				tmp_crc[ltype] ^=  StreamPacket[ltype] [3*(sampleCNT[ltype]-1)/2+5];
+
+			}
+			else
+			{
+				StreamPacket[ltype] [3*sampleCNT[ltype]/2+4] =  (sdata->dvalue[0]);
+				tmp_crc[ltype] ^=  (sdata->dvalue[0]);
+				StreamPacket[ltype] [3*sampleCNT[ltype]/2+5] =  ((unsigned char)((sdata->dvalue[1])&0x0f) );
+			}
+		}
+		break;
+
+		case MASK_8BIT:
+		{
+
+			StreamPacket[ltype] [sampleCNT[ltype] +4] =  (sdata->dvalue[0]);
+			tmp_crc[ltype] ^= (sdata->dvalue[0]);
+
+
+		}
+		break;
+
+		case MASK_24BIT:
+		{
+			StreamPacket[ltype] [3*sampleCNT[ltype] +4] =  (sdata->dvalue[0]);
+			tmp_crc[ltype] ^=  (sdata->dvalue[0]);
+
+			StreamPacket[ltype] [3*sampleCNT[ltype] +5] =  (sdata->dvalue[1]);
+			tmp_crc[ltype] ^=  (sdata->dvalue[1]);
+
+			StreamPacket[ltype] [3*sampleCNT[ltype] +6] =  (sdata->dvalue[2]);
+			tmp_crc[ltype] ^=  (sdata->dvalue[2]);
+
+		}
+		break;
+
+		case MASK_16BIT:
+		{
+			StreamPacket[ltype] [2*sampleCNT[ltype] +4] =  (sdata->dvalue[0]);
+			tmp_crc[ltype] ^= (sdata->dvalue[0]);
+
+			StreamPacket[ltype] [2*sampleCNT[ltype] +5] =  (sdata->dvalue[1]);
+			tmp_crc[ltype] ^=  (sdata->dvalue[1]);
+		}
+		break;
+
+		default:
+			sampleCNT[ltype]  = 0;
+			return;
+
+		}
+
+
+		sampleCNT[ltype]++;
+
+		if ( sampleCNT[ltype] == PACK_SAMPLES)
+		{
+			sampleCNT[ltype] = 0;
+			StreamPacket[ltype] [(PACK_SAMPLES/2)*bit_ind +4] = tmp_crc[ltype];
+			//     StreamPacket[ltype] [(PACK_SAMPLES/2)*bit_ind+5] = ( (uint8_t)tmp_crc[ltype]);
+			if( handle_comms[cur_stream_ch])
+				hsensor_comm_send(handle_comms[cur_stream_ch], StreamPacket[ltype],(PACK_SAMPLES/2)*bit_ind+5);
+
+
+		}
+	}
+
+}
+
+void read_sensor()
+{
+	sensor_data_t rdata;
+	if(health_sdata_read(&rdata) >0)
+	{
+		if(cur_sstate == DATA_STREAMING_STATE)
+		{
+			if(rdata.reg == (RegNum_Ad_Type_Cnt +0xf0))
+			{
+				//(rdata.value)  /= 4096;
+				( rdata.dtype ) >>= 4;
+				rdata.dvalue[2] += 0x80;
+				hstream_frameWithbits(&rdata,MASK_24BIT);
+			}
+
+		}
+
+		if(cur_sstate == SENSOR_FW_UPGRADING_STATE)
+		{
+
+			generalRspFrame( handle_comms[cur_stream_ch],FIRMWARE_UPGRADING_DATA,rdata.dvalue[1],rdata.dvalue[0]);
+			//generalRspFrame( handle_comms[cur_stream_ch],FIRMWARE_UPGRADING_DATA,rdata.dtype,(uint8_t)(rdata.value));
+			if(rdata.dvalue[1] == BL_CMD_SENSOR_APRDY)
+				sensor_fun_fwupgrade(0);
+
+		}
+
+		if(rdata.reg == RegNum_PStatus)
+		{
+			generalSendFrame(handle_comms[cur_stream_ch],INBED_IND,rdata.dvalue,1);
+			ESP_LOGI(FEELKIT_TAG, "INBED_IND=%d",rdata.dvalue[0]);
+		}
+
+	}
+
+
+}
+
+
+void process_sensor(sensor_data_t *rdata)
+{
+
+
+
+	if(cur_sstate == DATA_STREAMING_STATE)
+	{
+
+		//(rdata.value)  /= 4096;
+		( rdata->dtype ) >>= 4;
+		//hstream_frame(rdata);
+		hstream_frameWithbits(rdata,MASK_24BIT);
+
+	}
+	if(cur_sstate == SENSOR_FW_UPGRADING_STATE)
+	{
+
+		generalRspFrame( handle_comms[cur_stream_ch],FIRMWARE_UPGRADING_DATA,rdata->dvalue[1],rdata->dvalue[0]);
+		//generalRspFrame( handle_comms[cur_stream_ch],FIRMWARE_UPGRADING_DATA,rdata.dtype,(uint8_t)(rdata.value));
+
+	}
+}
+
+/*
+void read_adc()
+{
+
+	if(cur_sstate == DATA_STREAMING_STATE)
+	{
+		sensor_data_t *rdata;
+		uint16_t ad_12b = health_ecga_read(AdcFunType&0x0f);
+		rdata.dvalue[0] = (uint8_t)ad_12b;
+		rdata.dvalue[1] = (uint8_t)(ad_12b>>8);
+		rdata.dtype = (SAMPLE_ECG >>4);
+		//   hstream_frame(rdata);
+		hstream_frameWithbits(&rdata,MASK_12BIT);
+	}
+}
+*/
+void repeat_sensor_data( sensor_data_t *sensor_data )
+{
+	hstream_frameWithbits(sensor_data,MASK_24BIT);
+
+}
+
+
+void stream_process(xQueueHandle sQueue,hsensor_comm_handle_t huart,hsensor_comm_handle_t htcp,hsensor_comm_handle_t hble)
+{
+	hdata_type_t scmd;
+	uint8_t i=0;
+	cur_sstate = IDLE_STATE;
+	sensor_status = getBioSensorStatus();
+	ESP_LOGI(FEELKIT_TAG, "sensor_status = 0x%x \n",sensor_status);
+
+#ifdef CONFIG_HLOCAL_UART
+	handle_comms[REQ_FROM_UART] = huart;
+#endif
+	handle_comms[REQ_FROM_TCP] = htcp;
+	handle_comms[REQ_FROM_BLE] = hble;
+
+	cur_stream_ch = 0;
+
+	for(i=0; i< MAX_SENSOR_DTYPES; i++)
+	{
+		StreamPacket[i] = malloc(MAX_STREAM_TX_LEN);
+	}
+
+	while(1)
+	{
+		if(xQueueReceive(sQueue, &scmd, portMAX_DELAY))
+		{
+			switch(scmd.type)
+			{
+			case REQ_FROM_UART:
+			case REQ_FROM_TCP:
+			case REQ_FROM_BLE:
+				process_comm_cmd(scmd);
+				break;
+
+			case REQ_UART_FOR_SENSOR:
+			case REQ_FOR_SENSOR :
+				//ESP_LOGI(FEELKIT_TAG, "read_sensor!!!");
+
+				read_sensor();
+				//   process_sensor((sensor_data_t *)(cmdframe));
+
+				break;
+
+
+#ifdef ECG_ADC_CHANNEL_I
+
+
+			case REQ_FOR_MCU_AD :
+				if(cur_sstate == DATA_STREAMING_STATE)
+				{
+					sensor_data_t *rdata = health_read_adc(AdcFunType&0x0f);
+
+					hstream_frameWithbits(rdata,MASK_12BIT);
+				}
+				break;
+
+#endif
+			case IND_STATUS :
+			{
+				uint8_t *data_ind = (uint8_t *)scmd.pdata;
+				if(data_ind[0] == H_INFO_IPADDR)
+				{
+					generalSendFrame(handle_comms[REQ_FROM_BLE],IPADDR_IND,data_ind+1,4);
+
+
+				}
+
+				if(data_ind[0] == H_INFO_INBED)
+				{
+					generalSendFrame(handle_comms[cur_stream_ch],INBED_IND,data_ind+1,1);
+					ESP_LOGI(FEELKIT_TAG, "INBED_IND=%d",data_ind[1]);
+
+				}
+
+			}
+
+			break;
+
+			default :
+
+				break;
+
+
+			}
+		}
+
+	}
+	for(i=0; i< MAX_SENSOR_DTYPES; i++)
+	{
+		free(StreamPacket[i]);
+	}
+
+}
+
+

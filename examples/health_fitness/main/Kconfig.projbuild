@@ -1,0 +1,50 @@
+menu "Test Health Configuration"
+
+config WIFI_SSID
+    string "WiFi SSID"
+	default "WIFI_HDF"
+	help
+		SSID (network name) for the example to connect to.
+
+config WIFI_PASSWORD
+    string "WiFi Password"
+	default "HDF88888"
+	help
+		WiFi password (WPA or WPA2) for the example to use.
+		Can be left blank if the network has no security set.
+
+choice HEALTH_IP_MODE
+    prompt "IP Version"
+    help
+       Example can use either IPV4 or IPV6.
+
+config HEALTH_IPV4
+    bool "IPV4"
+
+config HEALTH_IPV6
+   bool "IPV6"
+
+endchoice
+
+config HEALTH_PORT
+    int "Port"
+    range 0 65535
+    default 3338
+    help
+        Test port the health server will listen on.
+
+choice HEALTH_BOARD_TYPE
+    bool "Board type"
+    default BOARD_CUSTOMER
+    help
+       Example can use either IPV4 or IPV6.
+
+config BOARD_CUSTOMER
+    bool "HealthCare Board from customer"
+
+config BOARD_DEMO_V10A
+   bool "HealthCare Demo Board"
+
+endchoice
+
+endmenu

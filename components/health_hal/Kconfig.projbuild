@@ -1,0 +1,17 @@
+menu "HEALTH HAL"
+
+choice HEALTH_PHY
+    prompt "Health hardware inface"
+    default ESP_HEALTH_I2C
+    help
+        Select an inface to use with the health module
+
+config ESP_HEALTH_I2C
+    bool "ESP32 Health i2c"
+config ESP_HEALTH_SPI
+    bool "ESP32 Health spi"
+config ESP_HEALTH_UART
+    bool "ESP32 Health uart"
+endchoice
+
+endmenu

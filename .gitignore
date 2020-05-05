@@ -30,3 +30,14 @@
 *.exe
 *.out
 *.app
+
+# Others
+*.bak
+*.mk.bak
+*.txt.bak
+*.c.bak
+*.h.bak
+*.pre
+*.c.pre
+*.h.pre
+*.md.bak
