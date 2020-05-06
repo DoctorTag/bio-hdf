@@ -1,7 +1,14 @@
 # BioSensor Healthcare Development Framework
 
 
-BioSensor Healthcare Development Framework (BIO-HDF) is the development framework for health applications with BioSensor Module --F58GM,Currently only supported [ESP32](https://espressif.com/en/products/hardware/esp32/overview) chip.
+BioSensor Healthcare Development Framework (BIO-HDF) is the development framework for health applications with BioSensor-F58GM,Currently only supported [ESP32](https://espressif.com/en/products/hardware/esp32/overview) chip.
+
+## A completed BioSensor project including software and hardware solutions; also depending on the following projects:
+
+PC Evaluation Tool using LabWindows CVI :
+[https://github.com/feelkit/bioDemo_labwindows_cvi](https://github.com/feelkit/bioDemo_labwindows_cvi)
+
+Andorid BioSensor project: [https://github.com/feelkit/bioModule_NRF52_BLE](https://github.com/feelkit/biosensor-android)
 
 ## Overview
 
@@ -49,15 +56,16 @@ We have released a number of boards for BIO-HDF to develop healthcare applicatio
 |  [Getting Started with BioSensor-F58GM](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyrat.html)  |  [Getting Started with Sleep monitoring strip](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyrat-mini.html)  |  [Getting Started with Wristband demo board](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyrat-mini.html)  |
 
 #### BioSensor-F58GM
-F58GM supports 8 electrodes to achieve applications with human electrical activities and impedance activities;
 
-Specially, for some common healthcare applications, BioSensor supports direct adaptation of these sensors, such as body temperature, weight, piezoelectric and so on.
+- F58GM supports 8 electrodes to achieve applications with human electrical activities and impedance activities;
 
-Optional,F58GM integrates red (660 nm), green (520 nm) and infrared (940 nm) three-color LED and photodiode(PD) sensor to realize PPG-related applications. 
+- Specially, for some common healthcare applications, BioSensor supports direct adaptation of these sensors, such as body temperature, weight, piezoelectric and so on.
 
-Optional, F58GM integrates Infrared thermopile for contactless medical temperature measurement, and the accuracy reaches ± 0.2 ℃ near 37 ℃.
+- Optional,F58GM integrates red (660 nm), green (520 nm) and infrared (940 nm) three-color LED and photodiode(PD) sensor to realize PPG-related applications. 
 
-F58GM integrates MCU/DSP with biological analog front end and 24 bit ADC , hardware interface supports SPI/I2C/UART optional.
+- Optional, F58GM integrates Infrared thermopile for contactless medical temperature measurement, and the accuracy reaches ± 0.2 ℃ near 37 ℃.
+
+- F58GM integrates MCU/DSP with biological analog front end and 24 bit ADC , hardware interface supports SPI/I2C/UART optional.
 
 #### Sleep monitoring strip
 An open-source development board, supporting Espressif Systems’ ADF and featuring voice wake-up, a wake-up button and an audio player. Designed for smart speakers and smart-home applications.
