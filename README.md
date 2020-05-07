@@ -68,22 +68,12 @@ We have released a number of boards for BIO-HDF to develop healthcare applicatio
 - F58GM integrates MCU/DSP with biological analog front end and 24 bit ADC , hardware interface supports SPI/I2C/UART optional.
 
 #### Sleep monitoring strip
-An open-source development board, supporting Espressif Systems’ ADF and featuring voice wake-up, a wake-up button and an audio player. Designed for smart speakers and smart-home applications.
+An open-source development board, supporting BIO-HDF and featuring contactless HR, RESP,Sleep,HRV and ...; Designed for contactless sleep monitoring applications.
 
 [<div align="center"><img src="docs/images/sleep_strip_long.png" width="700" alt ="Sleep Monitoring Strip Overview" align="center" /></div>](https://github.com/feelkit/sleep-monitor)
 
-* [Getting Started with ESP32-LyraT](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyrat.html)
-* [ESP32-LyraT V4.3 Hardware Reference](https://docs.espressif.com/projects/esp-adf/en/latest/design-guide/board-esp32-lyrat-v4.3.html)
-* [ESP32-LyraT Schematic (PDF)](https://dl.espressif.com/dl/schematics/esp32-lyrat-v4.3-schematic.pdf)
-
-#### Wristband Development Board
-
-Designed for smart speakers and AI applications. Supports Acoustic Echo Cancellation (AEC), Automatic Speech Recognition (ASR), Wake-up Interrupt and Voice Interaction.
-
-[<div align="center"><img src="docs/_static/esp32-lyratd-msc-v2.2-a-top.png" width="740" alt ="ESP32-LyraTD-MSC Development Board Overview" align="center" /></div>](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyratd-msc.html)
-
-* [Getting Started with ESP32-LyraTD-MSC](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyratd-msc.html)
-* [ESP32-LyraTD-MSC Schematic Lower Board A (PDF) ](https://dl.espressif.com/dl/schematics/ESP32-LyraTD-MSC_A_V2_2-1109A.pdf), [Upper Board B (PDF)](https://dl.espressif.com/dl/schematics/ESP32-LyraTD-MSC_B_V1_1-1109A.pdf)
+* [Getting Started with Sleep Strip](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyrat.html)
+* [Sleep Strip Hardware Reference](https://lceda.cn/seanfan/piezo_f58gm_esp32)
 
 #### Wristband Development Board
 
