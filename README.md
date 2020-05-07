@@ -8,7 +8,7 @@ BioSensor Healthcare Development Framework (BIO-HDF) is the development framewor
 PC Evaluation Tool using LabWindows CVI :
 [https://github.com/feelkit/bioDemo_labwindows_cvi](https://github.com/feelkit/bioDemo_labwindows_cvi)
 
-Andorid BioSensor project: [https://github.com/feelkit/bioModule_NRF52_BLE](https://github.com/feelkit/biosensor-android)
+Andorid BioSensor project: [https://github.com/feelkit/biosensor-android](https://github.com/feelkit/biosensor-android)
 
 ## Overview
 
@@ -50,10 +50,10 @@ The BioSensor-F58GM is a health module; it measures and transfers various types 
 
 We have released a number of boards for BIO-HDF to develop healthcare applications with BioSensor-F58GM , including:
 
-| BioSensor Module F58GM | PIEZO-ESP32-F58GM Sleep Strip | WRISTBAND-ESP32-F58GM Development Board |
+| BioSensor Module F58GM | PIEZO-ESP32-F58GM Sleep Monitoring Strip | WRISTBAND-ESP32-F58GM Development Board |
 |:----:|:----:|:----:|
-|  [<img src="docs/images/F58GM.png" width="400" alt ="BioSensor-F58GM" align="center" />](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyrat.html)  |  [<img src="docs/_static/esp32-lyratd-msc-v2.2.jpg" width="380" alt ="ESP32-LyraTD-MSC Development Board" align="center" />](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyratd-msc.html)  |  [<img src="docs/_static/esp32-lyrat-mini-v1.2.png" width="380" alt ="ESP32-LyraT-Mini Development Board" align="center" />](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyrat-mini.html)  |
-|  [Getting Started with BioSensor-F58GM](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyrat.html)  |  [Getting Started with Sleep monitoring strip](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyrat-mini.html)  |  [Getting Started with Wristband demo board](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyrat-mini.html)  |
+|  [<img src="docs/images/F58GM.png" width="400" alt ="BioSensor-F58GM" align="center" />](https://github.com/feelkit/bio-hdf/blob/master/docs/F58GM_V20C_EN.pdf)  |  [<img src="docs/images/sleep_strip.png" width="380" alt ="Sleep Monitoring Strip" align="center" />](https://github.com/feelkit/sleep-monitor)  |  [<img src="docs/images/wristband.png" width="380" alt ="Wristband Development Board" align="center" />](https://github.com/feelkit/bio-hdf)  |
+|  [Getting Started with BioSensor-F58GM](https://github.com/feelkit/bio-hdf/blob/master/docs/F58GM_V20C_EN.pdf)  |  [Getting Started with Sleep monitoring strip](https://github.com/feelkit/sleep-monitor)  |  [Coming soon](https://github.com/feelkit/bio-hdf)  |
 
 #### BioSensor-F58GM
 
@@ -70,7 +70,7 @@ We have released a number of boards for BIO-HDF to develop healthcare applicatio
 #### Sleep monitoring strip
 An open-source development board, supporting Espressif Systems’ ADF and featuring voice wake-up, a wake-up button and an audio player. Designed for smart speakers and smart-home applications.
 
-[<div align="center"><img src="docs/_static/esp32-lyrat-v4.3-layout-overview.jpg" width="700" alt ="ESP32-LyraT Development Board Overview" align="center" /></div>](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyrat.html)
+[<div align="center"><img src="docs/images/sleep_strip_long.png" width="700" alt ="Sleep Monitoring Strip Overview" align="center" /></div>](https://github.com/feelkit/sleep-monitor)
 
 * [Getting Started with ESP32-LyraT](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyrat.html)
 * [ESP32-LyraT V4.3 Hardware Reference](https://docs.espressif.com/projects/esp-adf/en/latest/design-guide/board-esp32-lyrat-v4.3.html)
@@ -85,16 +85,11 @@ Designed for smart speakers and AI applications. Supports Acoustic Echo Cancella
 * [Getting Started with ESP32-LyraTD-MSC](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyratd-msc.html)
 * [ESP32-LyraTD-MSC Schematic Lower Board A (PDF) ](https://dl.espressif.com/dl/schematics/ESP32-LyraTD-MSC_A_V2_2-1109A.pdf), [Upper Board B (PDF)](https://dl.espressif.com/dl/schematics/ESP32-LyraTD-MSC_B_V1_1-1109A.pdf)
 
-#### ESP32-LyraT-Mini
+#### Wristband Development Board
 
 An open-source mono development board. Designed for connected smart speakers and smart-home audio applications.
 
-[<div align="center"><img src="docs/_static/esp32-lyrat-mini-v1.2-layout-overview.png" width="740" alt ="ESP32-LyraT-Mini Development Board Overview" align="center" /></div>](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyrat-mini.html)
-
-* [Getting Started with ESP32-LyraT-Mini](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyrat-mini.html)
-* [ESP32-LyraT-Mini Schematic (PDF) ](https://dl.espressif.com/dl/schematics/SCH_ESP32-LYRAT-MINI_V1.2_20190605.pdf)
-
-ESP-**A**DF is based on the application layer of ESP-**I**DF ([Espressif IoT Development Framework](https://github.com/espressif/esp-idf)). The `git clone` command, described under [Quick Start](#quick-start) above, automatically downloads specific version of the ESP-IDF alongside with ESP-ADF. Please take a look at [Get Started](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/index.html)
+Coming soon...
 
 #### Examples
 
