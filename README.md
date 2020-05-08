@@ -77,13 +77,14 @@ An open-source development board, supporting BIO-HDF and featuring contactless H
 * [Getting Started with Sleep Strip](https://bio-hdf-docs.readthedocs.io/)
 * [Sleep Strip Hardware Reference](https://lceda.cn/seanfan/piezo_f58gm_esp32)
 
+* Sleep Strip PCBA Top:
 [<div align="center"><img src="docs/images/sleep_strip_pcba_top.png" width="700" alt ="Sleep Monitoring Strip PCBA top" align="center" /></div>](https://lceda.cn/seanfan/piezo_f58gm_esp32)
-
+* Sleep Strip PCBA Bottom:
 [<div align="center"><img src="docs/images/sleep_strip_pcba_bot.png" width="700" alt ="Sleep Monitoring Strip PCBA bottom" align="center" /></div>](https://lceda.cn/seanfan/piezo_f58gm_esp32)
 
 #### Wristband Development Board
 
-An open-source mono development board. Designed for connected smart speakers and smart-home audio applications.
+An open-source mono development board. Designed for Smart Wearale healthcare applications.
 
 Coming soon...
 
