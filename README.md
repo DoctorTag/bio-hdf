@@ -93,7 +93,7 @@ Coming soon...
 Check folder [examples](examples) that contains sample applications to demonstrate API features of the BIO-HDF.
 
 # Resources
-* BioSensor-F58GM Specs：[https://github.com/feelkit/bio-hdf/blob/master/docs/F58GM_V20C_EN.pdf](https://github.com/feelkit/bio-hdf/blob/master/docs/F58GM_V20C_EN.pdf)
+* BioSensor-F58GM Specs：[F58GM_V20C_EN.pdf](docs/F58GM_V20C_EN.pdf)
 * Sleep Monitoring Strip Hardware Reference( Sch & Pcb )：[https://lceda.cn/seanfan/piezo_f58gm_esp32](https://lceda.cn/seanfan/piezo_f58gm_esp32)
 * [Documentation](https://bio-hdf-docs.readthedocs.io/en/latest/index.html) for the latest version of https://github.com/feelkit/bio-hdf-docs/ . This documentation is built from the [docs directory](docs) of this repository.
 
