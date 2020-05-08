@@ -46,14 +46,16 @@ xcopy /e /i %HDF_PATH%\examples\get-started\hello_world hello_world
 If you clone project without `--recursive` flag, please goto the `bio-hdf` directory and run command `git submodule update --init` before doing anything.
 
 ### Hardware
-The BioSensor-F58GM is a health module; it measures and transfers various types of bio-data such as ECG,BCG,EEG,RESP,GSR,HR,PPG,Spo2,HCM,BIA and Temperature ... , integrated Bio-Processor with Analog Front-End to make an all-in-one health monitoring solution. 
+The BioSensor-F58GM is a health module; 
+
+it measures and transfers various types of bio-data such as ECG, BCG, EEG, RESP, GSR, HR, PPG, Spo2, HCM, BIA and Temperature ... , integrated Bio-Processor with Analog Front-End to make an all-in-one health monitoring solution. 
 
 We have released a number of boards for BIO-HDF to develop healthcare applications with BioSensor-F58GM , including:
 
 | BioSensor Module F58GM | PIEZO-ESP32-F58GM Sleep Monitoring Strip | WRISTBAND-ESP32-F58GM Development Board |
 |:----:|:----:|:----:|
-|  [<img src="docs/images/F58GM.png" width="400" alt ="BioSensor-F58GM" align="center" />](https://github.com/feelkit/bio-hdf/blob/master/docs/F58GM_V20C_EN.pdf)  |  [<img src="docs/images/sleep_strip.png" width="380" alt ="Sleep Monitoring Strip" align="center" />](https://github.com/feelkit/sleep-monitor)  |  [<img src="docs/images/wristband.png" width="380" alt ="Wristband Development Board" align="center" />](https://github.com/feelkit/bio-hdf)  |
-|  [Getting Started with BioSensor-F58GM](https://github.com/feelkit/bio-hdf/blob/master/docs/F58GM_V20C_EN.pdf)  |  [Getting Started with Sleep monitoring strip](https://github.com/feelkit/sleep-monitor)  |  [Coming soon](https://github.com/feelkit/bio-hdf)  |
+|  [<img src="docs/images/F58GM.png" width="400" alt ="BioSensor-F58GM" align="center" />](https://github.com/feelkit/bio-hdf/blob/master/docs/F58GM_V20C_EN.pdf)  |  [<img src="docs/images/sleep_strip.png" width="380" alt ="Sleep Monitoring Strip" align="center" />](https://bio-hdf-docs.readthedocs.io)  |  [<img src="docs/images/wristband.png" width="380" alt ="Wristband Development Board" align="center" />](https://github.com/feelkit/bio-hdf)  |
+|  [Getting Started with BioSensor-F58GM](https://github.com/feelkit/bio-hdf/blob/master/docs/F58GM_V20C_EN.pdf)  |  [Getting Started with Sleep monitoring strip](https://bio-hdf-docs.readthedocs.io)  |  [Coming soon](https://github.com/feelkit/bio-hdf)  |
 
 #### BioSensor-F58GM
 
@@ -70,10 +72,14 @@ We have released a number of boards for BIO-HDF to develop healthcare applicatio
 #### Sleep monitoring strip
 An open-source development board, supporting BIO-HDF and featuring contactless HR, RESP,Sleep,HRV and ...; Designed for contactless sleep monitoring applications.
 
-[<div align="center"><img src="docs/images/sleep_strip_long.png" width="700" alt ="Sleep Monitoring Strip Overview" align="center" /></div>](https://github.com/feelkit/sleep-monitor)
+[<div align="center"><img src="docs/images/sleep_strip_long.png" width="700" alt ="Sleep Monitoring Strip Overview" align="center" /></div>](https://bio-hdf-docs.readthedocs.io)
 
-* [Getting Started with Sleep Strip](https://docs.espressif.com/projects/esp-adf/en/latest/get-started/get-started-esp32-lyrat.html)
+* [Getting Started with Sleep Strip](https://bio-hdf-docs.readthedocs.io/)
 * [Sleep Strip Hardware Reference](https://lceda.cn/seanfan/piezo_f58gm_esp32)
+
+[<div align="center"><img src="docs/images/sleep_strip_pcba_top.png" width="700" alt ="Sleep Monitoring Strip PCBA top" align="center" /></div>](https://lceda.cn/seanfan/piezo_f58gm_esp32)
+
+[<div align="center"><img src="docs/images/sleep_strip_pcba_bot.png" width="700" alt ="Sleep Monitoring Strip PCBA bottom" align="center" /></div>](https://lceda.cn/seanfan/piezo_f58gm_esp32)
 
 #### Wristband Development Board
 
@@ -83,11 +89,16 @@ Coming soon...
 
 #### Examples
 
-Check folder [examples](examples) that contains sample applications to demonstrate API features of the ESP-ADF.
+Check folder [examples](examples) that contains sample applications to demonstrate API features of the BIO-HDF.
 
 # Resources
+* BioSensor-F58GM Specs：[https://github.com/feelkit/bio-hdf/blob/master/docs/F58GM_V20C_EN.pdf](https://github.com/feelkit/bio-hdf/blob/master/docs/F58GM_V20C_EN.pdf)
+* Sleep Monitoring Strip Hardware Reference( Sch & Pcb )：[https://lceda.cn/seanfan/piezo_f58gm_esp32](https://lceda.cn/seanfan/piezo_f58gm_esp32)
+* [Documentation](https://bio-hdf-docs.readthedocs.io/en/latest/index.html) for the latest version of https://github.com/feelkit/bio-hdf-docs/ . This documentation is built from the [docs directory](docs) of this repository.
 
-* [Documentation](https://docs.espressif.com/projects/esp-adf/en/latest/index.html) for the latest version of https://docs.espressif.com/projects/esp-adf/. This documentation is built from the [docs directory](docs) of this repository.
-* The [esp32.com forum](https://esp32.com/) is a place to ask questions and find community resources. On the forum there is a [section dedicated to ESP-ADF](https://esp32.com/viewforum.php?f=20) users.
-* [Check the Issues section on github](https://github.com/espressif/esp-adf/issues) if you find a bug or have a feature request. Please check existing Issues before opening a new one.
-* If you're interested in contributing to ESP-ADF, please check the [Contributions Guide](https://esp-idf.readthedocs.io/en/latest/contribute/index.html).
+
+# Contact
+If you have technical problems and ideas to communicate with us, you can
+contact us by Email: fanfeiwu@gmail.com, QQ: 4646079
+
+For more information,please browse our homepage: [www.feelkit.com](http://www.feelkit.com).
