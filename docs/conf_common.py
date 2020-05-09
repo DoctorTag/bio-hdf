@@ -29,7 +29,7 @@ if 'BUILDDIR' in os.environ:
     builddir = os.environ['BUILDDIR']
 
 # Call Doxygen to get XML files from the header files
-print "Calling Doxygen to generate latest XML files"
+# print "Calling Doxygen to generate latest XML files"
 os.system("doxygen ../Doxyfile")
 # Doxygen has generated XML files in 'xml' directory.
 # Copy them to 'xml_in', only touching the files which have changed.
