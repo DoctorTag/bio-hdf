@@ -295,7 +295,7 @@ if __name__ == "__main__":
         if api_name:
             rst_output = generate_directives(header_file_path)
             print ("Doxygen directives for '%s'" % header_file_path)
-            print ()
+            print
             print (rst_output)
         else:
             print ("Options to execute 'gen-dxd.py' application:")

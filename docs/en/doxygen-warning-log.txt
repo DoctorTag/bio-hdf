@@ -1,0 +1,6 @@
+D:/software/esp32/esp-adf/components/audio_hal/driver/es8374/es8374.h:209: warning: documented empty return type of es8374_read_all
+D:/software/esp32/esp-adf/components/audio_hal/driver/es8374/es8374.h:243: warning: documented empty return type of es8374_pa_power
+D:/software/esp32/esp-adf/components/audio_hal/driver/es8388/es8388.h:272: warning: documented empty return type of es8388_read_all
+D:/software/esp32/esp-adf/components/audio_hal/driver/es8388/es8388.h:306: warning: documented empty return type of es8388_pa_power
+D:/software/esp32/esp-adf/components/audio_sal/include/audio_mem.h:53: warning: documented empty return type of audio_free
+D:/software/esp32/esp-adf/components/audio_sal/include/audio_mem.h:89: warning: documented empty return type of audio_mem_print
