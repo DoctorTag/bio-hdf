@@ -1,6 +1,23 @@
-D:/software/esp32/esp-adf/components/audio_hal/driver/es8374/es8374.h:209: warning: documented empty return type of es8374_read_all
-D:/software/esp32/esp-adf/components/audio_hal/driver/es8374/es8374.h:243: warning: documented empty return type of es8374_pa_power
-D:/software/esp32/esp-adf/components/audio_hal/driver/es8388/es8388.h:272: warning: documented empty return type of es8388_read_all
-D:/software/esp32/esp-adf/components/audio_hal/driver/es8388/es8388.h:306: warning: documented empty return type of es8388_pa_power
-D:/software/esp32/esp-adf/components/audio_sal/include/audio_mem.h:53: warning: documented empty return type of audio_free
-D:/software/esp32/esp-adf/components/audio_sal/include/audio_mem.h:89: warning: documented empty return type of audio_mem_print
+D:/software/esp32/bio-hdf/components/esp-hdf-libs/include/analysis_piezo.h:42: warning: Compound analysis_result_t is not documented.
+D:/software/esp32/bio-hdf/components/health_comm/include/health_comm_protocol.h:24: warning: Compound hsensor_comm_protocol_t is not documented.
+D:/software/esp32/bio-hdf/components/health_hal/hw/health_hw.h:128: warning: Compound sensor_data is not documented.
+D:/software/esp32/bio-hdf/components/health_hal/hw/health_hw.h:135: warning: Compound hdata_type_t is not documented.
+D:/software/esp32/bio-hdf/components/esp-hdf-libs/include/analysis_piezo.h:44: warning: Member cur_body_status (variable) of class analysis_result_t is not documented.
+D:/software/esp32/bio-hdf/components/esp-hdf-libs/include/analysis_piezo.h:45: warning: Member sleep_post (variable) of class analysis_result_t is not documented.
+D:/software/esp32/bio-hdf/components/esp-hdf-libs/include/analysis_piezo.h:46: warning: Member cur_sleep_status (variable) of class analysis_result_t is not documented.
+D:/software/esp32/bio-hdf/components/esp-hdf-libs/include/analysis_piezo.h:47: warning: Member hr (variable) of class analysis_result_t is not documented.
+D:/software/esp32/bio-hdf/components/esp-hdf-libs/include/analysis_piezo.h:48: warning: Member resp (variable) of class analysis_result_t is not documented.
+D:/software/esp32/bio-hdf/components/esp-hdf-libs/include/analysis_piezo.h:49: warning: Member hr_ok (variable) of class analysis_result_t is not documented.
+D:/software/esp32/bio-hdf/components/esp-hdf-libs/include/analysis_piezo.h:50: warning: Member resp_ok (variable) of class analysis_result_t is not documented.
+D:/software/esp32/bio-hdf/components/health_hal/hw/health_hw.h:137: warning: Member type (variable) of class hdata_type_t is not documented.
+D:/software/esp32/bio-hdf/components/health_hal/hw/health_hw.h:139: warning: Member pdata (variable) of class hdata_type_t is not documented.
+D:/software/esp32/bio-hdf/components/health_comm/include/health_comm_protocol.h:26: warning: Member rx_state (variable) of class hsensor_comm_protocol_t is not documented.
+D:/software/esp32/bio-hdf/components/health_comm/include/health_comm_protocol.h:27: warning: Member offset (variable) of class hsensor_comm_protocol_t is not documented.
+D:/software/esp32/bio-hdf/components/health_comm/include/health_comm_protocol.h:28: warning: Member lcrc (variable) of class hsensor_comm_protocol_t is not documented.
+D:/software/esp32/bio-hdf/components/health_comm/include/health_comm_protocol.h:29: warning: Member rcrc (variable) of class hsensor_comm_protocol_t is not documented.
+D:/software/esp32/bio-hdf/components/health_comm/include/health_comm_protocol.h:30: warning: Member rlength (variable) of class hsensor_comm_protocol_t is not documented.
+D:/software/esp32/bio-hdf/components/health_comm/include/health_comm_protocol.h:31: warning: Member rx_frame[MAX_RX_LENGTH] (variable) of class hsensor_comm_protocol_t is not documented.
+D:/software/esp32/bio-hdf/components/health_comm/include/health_comm_protocol.h:32: warning: Member frame_cb)(unsigned char *dframe) (variable) of class hsensor_comm_protocol_t is not documented.
+D:/software/esp32/bio-hdf/components/health_hal/hw/health_hw.h:130: warning: Member reg (variable) of class sensor_data is not documented.
+D:/software/esp32/bio-hdf/components/health_hal/hw/health_hw.h:131: warning: Member dtype (variable) of class sensor_data is not documented.
+D:/software/esp32/bio-hdf/components/health_hal/hw/health_hw.h:132: warning: Member dvalue[3] (variable) of class sensor_data is not documented.

@@ -22,10 +22,10 @@ def setup(app):
     rev = get_github_rev()
 
     # links to files or folders on the GitHub
-    baseurl = 'https://github.com/espressif/esp-adf'
-    app.add_role('adf', autolink('{}/tree/{}/%s'.format(baseurl, rev)))
-    app.add_role('adf_file', autolink('{}/blob/{}/%s'.format(baseurl, rev)))
-    app.add_role('adf_raw', autolink('{}/raw/{}/%s'.format(baseurl, rev)))
+    baseurl = 'https://github.com/feelkit/bio-hdf'
+    app.add_role('hdf', autolink('{}/tree/{}/%s'.format(baseurl, rev)))
+    app.add_role('hdf_file', autolink('{}/blob/{}/%s'.format(baseurl, rev)))
+    app.add_role('hdf_raw', autolink('{}/raw/{}/%s'.format(baseurl, rev)))
     app.add_role('component', autolink('{}/tree/{}/components/%s'.format(baseurl, rev)))
     app.add_role('component_file', autolink('{}/blob/{}/components/%s'.format(baseurl, rev)))
     app.add_role('component_raw', autolink('{}/raw/{}/components/%s'.format(baseurl, rev)))

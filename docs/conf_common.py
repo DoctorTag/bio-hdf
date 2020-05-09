@@ -70,8 +70,8 @@ extensions = ['breathe',
 # Doxygen regenerates files in 'xml/' directory every time,
 # but we copy files to 'xml_in/' only when they change, to speed up
 # incremental builds.
-breathe_projects = { "esp32-adf": "xml_in/" }
-breathe_default_project = "esp32-adf"
+breathe_projects = { "bio-hdf": "xml_in/" }
+breathe_default_project = "bio-hdf"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
