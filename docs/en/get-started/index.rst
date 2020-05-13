@@ -13,7 +13,7 @@ To make the start with BIO-HDF quicker, We designed development boards intended 
 ==========================================  ==========================================  
 
 .. |Getting Started with Sleep-Strip| image:: ../../_static/sleep_strip.png
-.. _Getting Started with Sleep-Strip: get-started-Sleep-Strip.html
+.. _Getting Started with Sleep-Strip: get-started-esp32-sleep-strip-v01.html
 
 .. |Getting Started with Wristband-F58GM| image:: ../../_static/wristband.png
 .. _Getting Started with Wristband-F58GM: get-started-Wristband-F58GM.html
