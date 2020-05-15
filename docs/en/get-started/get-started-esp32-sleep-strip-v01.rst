@@ -116,7 +116,7 @@ Connecting to PC by WIFI
 
 * First,pluging the sleep-strip's USB connector into the PC or power bank;
 
-* Run the **biosensor.apk** in Android Phone；**Note：** Turn on Bluetooth in the phone settings menu；If it's normal,the following view will be displayed:
+* Run the **biosensor.apk** in Android Phone； **Note：** Turn on Bluetooth in the phone settings menu；If it's normal,the following view will be displayed:
 
 .. figure:: ../../_static/android/android_start.PNG
     :alt: biosensor android start
@@ -157,7 +157,7 @@ Connecting to PC by WIFI
     Input the sleep-strip's IP address
 
 
-6. Click **OK** button to return to the following view. If it's normal,the PC should be connected to the sleep-strip now.**Note:** The PC and the sleep-strip must be in the same routing network.
+6. Click **OK** button to return to the following view. If it's normal,the PC should be connected to the sleep-strip now. **Note:** The PC and the sleep-strip must be in the same routing network.
 
 .. figure:: ../../_static/cvi_images/begin_with_sleep.png
     :alt: Begin to test the sleep-strip 
