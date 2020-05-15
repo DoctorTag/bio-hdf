@@ -124,7 +124,7 @@ Connecting to PC by WIFI
 
     biosensor android start    
     
-* Click **CONFIG WIFI** button;The input box as shown in the following figure will be displayed;Then please input SSID&PWD(Format:**XXXXXXX xxxxxxxxx**);**Note：** Separate SSID and PWD with spaces ,and SSID can't contain spaces.
+* Click **CONFIG WIFI** button;The input box as shown in the following figure will be displayed;Then please input  WIFI SSID&PWD(Format: **XXXXXXX xxxxxxxxx**) from your Router; **Note：** Separate SSID and PWD with spaces ,and SSID can't contain spaces.
 
 .. figure:: ../../_static/android/android_input.PNG
     :alt: Input WIFI SSID PWD
@@ -148,7 +148,7 @@ Connecting to PC by WIFI
 
     Connecting to the sleep-strip
 
-5. Click **Config Port** button;The input box as shown in the following figure will be displayed：
+5. Click **Config Port** button;The input box as shown in the following figure will be displayed. **Note:** Please input the above IP address.
 
 .. figure:: ../../_static/cvi_images/config_tcp_port.png
     :alt: Input the sleep-strip's IP address 
