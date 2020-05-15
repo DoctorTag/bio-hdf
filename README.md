@@ -54,7 +54,7 @@ We have released a number of boards for BIO-HDF to develop healthcare applicatio
 
 | BioSensor Module F58GM | PIEZO-ESP32-F58GM Sleep Monitoring Strip | WRISTBAND-ESP32-F58GM Development Board |
 |:----:|:----:|:----:|
-|  [<img src="docs/images/F58GM.png" width="400" alt ="BioSensor-F58GM" align="center" />](https://github.com/feelkit/bio-hdf/blob/master/docs/F58GM_V20C_EN.pdf)  |  [<img src="docs/images/sleep_strip.png" width="380" alt ="Sleep Monitoring Strip" align="center" />](https://bio-hdf-docs.readthedocs.io)  |  [<img src="docs/images/wristband.png" width="380" alt ="Wristband Development Board" align="center" />](https://github.com/feelkit/bio-hdf)  |
+|  [<img src="docs/_static/F58GM.png" width="400" alt ="BioSensor-F58GM" align="center" />](https://github.com/feelkit/bio-hdf/blob/master/docs/F58GM_V20C_EN.pdf)  |  [<img src="docs/_static/sleep_strip.png" width="380" alt ="Sleep Monitoring Strip" align="center" />](https://bio-hdf-docs.readthedocs.io)  |  [<img src="docs/_static/wristband.png" width="380" alt ="Wristband Development Board" align="center" />](https://github.com/feelkit/bio-hdf)  |
 |  [Getting Started with BioSensor-F58GM](https://github.com/feelkit/bio-hdf/blob/master/docs/F58GM_V20C_EN.pdf)  |  [Getting Started with Sleep monitoring strip](https://bio-hdf-docs.readthedocs.io)  |  [Coming soon](https://github.com/feelkit/bio-hdf)  |
 
 #### BioSensor-F58GM
@@ -72,15 +72,15 @@ We have released a number of boards for BIO-HDF to develop healthcare applicatio
 #### Sleep monitoring strip
 An open-source development board, supporting BIO-HDF and featuring contactless HR, RESP,Sleep,HRV and ...; Designed for contactless sleep monitoring applications.
 
-[<div align="center"><img src="docs/images/sleep_strip_long.png" width="700" alt ="Sleep Monitoring Strip Overview" align="center" /></div>](https://bio-hdf-docs.readthedocs.io)
+[<div align="center"><img src="docs/_static/sleep_strip_long.png" width="700" alt ="Sleep Monitoring Strip Overview" align="center" /></div>](https://bio-hdf-docs.readthedocs.io)
 
 * [Getting Started with Sleep Strip](https://bio-hdf-docs.readthedocs.io/)
 * [Sleep Strip Hardware Reference](https://lceda.cn/seanfan/piezo_f58gm_esp32)
 
 * Sleep Strip PCBA Top:
-[<div align="center"><img src="docs/images/sleep_strip_pcba_top.png" width="700" alt ="Sleep Monitoring Strip PCBA top" align="center" /></div>](https://lceda.cn/seanfan/piezo_f58gm_esp32)
+[<div align="center"><img src="docs/_static/sleep_strip/sleep_strip_pcba_top.png" width="700" alt ="Sleep Monitoring Strip PCBA top" align="center" /></div>](https://lceda.cn/seanfan/piezo_f58gm_esp32)
 * Sleep Strip PCBA Bottom:
-[<div align="center"><img src="docs/images/sleep_strip_pcba_bot.png" width="700" alt ="Sleep Monitoring Strip PCBA bottom" align="center" /></div>](https://lceda.cn/seanfan/piezo_f58gm_esp32)
+[<div align="center"><img src="docs/_static/sleep_strip/sleep_strip_pcba_bot.png" width="700" alt ="Sleep Monitoring Strip PCBA bottom" align="center" /></div>](https://lceda.cn/seanfan/piezo_f58gm_esp32)
 
 #### Wristband Development Board
 
