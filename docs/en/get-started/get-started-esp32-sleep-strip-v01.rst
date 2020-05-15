@@ -10,8 +10,11 @@ What You Need
 -------------
 
 * 1 × :ref:`ESP32 Sleep Monitoring Strip <get-started-esp32-sleep-strip-v01>`
+
 * 1 x Power Bank with USB Type-A Female
+
 * 1 x Android phone/PAD with Bluetooth BLE and WIFI
+
 * 1 × PC loaded with Windows
 
 
@@ -21,8 +24,11 @@ Overview
 The ESP32-Sleep-Monitoring-Strip is a healthcare development board built around BioSensor-F58GM and ESP32. The following functions are supported: 
 
 * Tracking HR,RESP,Sleep,In/out bed ...
+
 * Analysis about HRV and OSAHS
+
 * Run as strip sensor under mattress
+
 * Non-contact, even without any assistance
 
 
@@ -116,6 +122,7 @@ Connecting to PC by WIFI
 
 * First,pluging the sleep-strip's USB connector into the PC or power bank;
 
+
 * Run the **biosensor.apk** in Android Phone； **Note：** Turn on Bluetooth in the phone settings menu；If it's normal,the following view will be displayed:
 
 .. figure:: ../../_static/android/android_start.PNG
@@ -177,11 +184,11 @@ Connecting to PC by WIFI
 
 * There are two areas of waveform, one shows the raw data, the other shows the effects of filtering, enhancement, peak seeking, etc
 
-* The mark **1** indicates whether someone is in bed.When something is placed on the sleep-strip, the indicator light will turn green, otherwise it will turn red
+* The mark **1** indicates whether someone is in bed. When something is placed on the sleep-strip, the indicator light will turn green, otherwise it will turn red
 
 * The mark **2** shows the movement of the person in bed,eg : Moving,Repose and Turning over.
 
-* The mark **3** indicates whether someone in bed is moving.When the person is moving, the indicator light will turn red, otherwise it will turn green.
+* The mark **3** indicates whether someone in bed is moving. When the person is moving, the indicator light will turn red, otherwise it will turn green.
 
 * The mark **4** indicates HR of someone in bed.
 
