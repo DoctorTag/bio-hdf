@@ -5,8 +5,6 @@ This guide provides users with functional descriptions, configuration options fo
 
 The ESP32-Sleep-Monitoring-Strip development board is a hardware platform designed for the dual-core ESP32 healthcare applications with BioSensor-F58GM, e.g., tracking HR, RESP, Sleep,In/out Bed etc.
 
-If you like to start using this board right now, go directly to section :ref:`get-started-esp32-sleep-strip-start-development`.
-
 
 What You Need
 -------------
@@ -87,8 +85,11 @@ Software Setup Options
 ^^^^^^^^^^^^^^^^^^^^^^
 
 Generally,the ESP32-Sleep-Strip need to be connected to a PC or mobile phone by BLE&WIFI in order to test; Even it can acess to Cloud services by WIFI.
+
 Currently,for PC Software Development Kit please refer to `the demo kit about LabWindows CVI-2017 <https://github.com/feelkit/bioDemo_labwindows_cvi>`_;
+
 For mobile application we are working hard to develop `the Android APP <https://github.com/feelkit/biosensor-android>`_;This project has not been completed, we are still updating frequently.
+
 If you want to acess to your Cloud services, you may need to do the work yourself. Of course, we can provide technical support. In a word, you can contact me (fanfeiwu@gmail.com)  if you have any technical question. We are professional in healthcare.
 
 
@@ -117,7 +118,7 @@ Connecting to PC by WIFI
 
 * Run the **biosensor.apk** in Android Phone；**Note：** Turn on Bluetooth in the phone settings menu；If it's normal,the following view will be displayed:
 
-.. figure:: ../../_static/android/android_start.png
+.. figure:: ../../_static/android/android_start.PNG
     :alt: biosensor android start
     :figclass: align-center
 
@@ -125,7 +126,7 @@ Connecting to PC by WIFI
     
 * Click **CONFIG WIFI** button;The input box as shown in the following figure will be displayed;Then please input SSID&PWD(Format:**XXXXXXX xxxxxxxxx**);**Note：** Separate SSID and PWD with spaces ,and SSID can't contain spaces.
 
-.. figure:: ../../_static/android/android_input.png
+.. figure:: ../../_static/android/android_input.PNG
     :alt: Input WIFI SSID PWD
     :figclass: align-center
 
@@ -133,7 +134,7 @@ Connecting to PC by WIFI
 
 * Click **OK** button;If it's normal,the following figure with IP address(Format: **IP:XXX.XXX.XXX.XXX**) will be displayed:
 
-.. figure:: ../../_static/android/android_ip.png
+.. figure:: ../../_static/android/android_ip.PNG
     :alt: Sleep Strip IP address 
     :figclass: align-center
 
@@ -192,7 +193,7 @@ Connecting to PC by WIFI
 Related Documents
 -----------------
 
-* :doc:`F58GM_V20C_EN.pdf`
+* `BioSensor-F58GM Specs <https://github.com/feelkit/bio-hdf/blob/master/docs/_static/F58GM_V20C_EN.pdf>`_ (PDF)
 * `ESP32-Sleep-Monitoring-Strip schematic & PCB <https://lceda.cn/seanfan/piezo_f58gm_esp32>`_
 
 * `ESP32 Datasheet <https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf>`_ (PDF)
