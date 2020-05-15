@@ -55,7 +55,7 @@ You have a choice to compile and upload code to the ESP32 by command line with `
 
 To make the installation easier and less prone to errors, use the ``~/esp`` default directory for the installation. Once you get through ESP-IDF setup and move to the BIO-HDF, you will notice that installation of the BIO-HDF follows the similar process. This should make it even easier to get up and running with the BIO-HDF.
 
-If this is your first exposure to the ESP32 and `ESP-IDF <https://github.com/espressif/esp-idf>`_, then it is recommended to get familiar with :adf:`hello_world <esp-idf/examples/get-started/hello_world>` and :adf:`blink <esp-idf/examples/get-started/blink>` examples first. Once you can build, upload and run these two examples, then you are ready to proceed to the next section.
+If this is your first exposure to the ESP32 and `ESP-IDF <https://github.com/espressif/esp-idf>`_, then it is recommended to get familiar with :hdf:`hello_world <esp-idf/examples/get-started/hello_world>` and :hdf:`blink <esp-idf/examples/get-started/blink>` examples first. Once you can build, upload and run these two examples, then you are ready to proceed to the next section.
 
 
 .. _get-started-get-esp-hdf:
@@ -100,14 +100,14 @@ After initial preparation you are ready to build the first healthcare applicatio
     BIO-HDF is based on a specific release of the ESP-IDF. You will see this release cloned with BIO-HDF as a subdirectory, or more specifically as a submodule e.g. ``esp-idf @ ca3faa61`` visible on the GitHub. Just follow this instruction and the build scripts will automatically reach ESP-IDF from the submodule.
 
 
-To demonstrate how to build an application, we will use :example:`get-started/health_piezo` project from :hdf:`examples` directory in the ADF.
+To demonstrate how to build an application, we will use :example:`get-started/health_piezo` project from :hdf:`examples` directory in the HDF.
 
 Copy :example:`get-started/health_piezo` to ``~/esp`` directory::
 
     cd ~/esp
     cp -r $HDF_PATH/examples/get-started/health_piezo .
 
-You can also find a range of example projects under the :adf:`examples` directory in the BIO-HDF repository. These example project directories can be copied in the same way as presented above, to begin your own projects.
+You can also find a range of example projects under the :hdf:`examples` directory in the BIO-HDF repository. These example project directories can be copied in the same way as presented above, to begin your own projects.
 
 
 .. _get-started-connect-configure:
