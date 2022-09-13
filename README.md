@@ -90,7 +90,7 @@ Check folder [examples](examples) that contains sample applications to demonstra
 
 # Resources
 * BioSensor-F58GF Specs：[F58GF_V20C_EN.pdf](docs/F58GF_V20C_EN.pdf)
-* Wearable medical monitor Hardware Reference( Sch & Pcb )：[https://lceda.cn/seanfan/piezo_F58GF_esp32](https://lceda.cn/seanfan/piezo_F58GF_esp32)
+* [Wearable medical monitor Hardware Reference( Sch & Pcb )](https://lceda.cn/editor#id=053828a3fcc842c6be50f1ebc4243324)
 * [Documentation](https://bio-hdf-docs.readthedocs.io/en/latest/index.html) for the latest version of https://github.com/DoctorTag/bio-hdf-docs/ . This documentation is built from the [docs directory](docs) of this repository.
 
 
