@@ -74,15 +74,15 @@ it measures and transfers various types of bio-data such as ECG, BCG, EEG, RESP,
 #### Wearalbe Medical Monitor
 An open-source development board, supporting BIO-HDF and featuring contactless HR, RESP,Sleep,HRV and ...; Designed for wearable medical monitor application.
 
-[<div align="center"><img src="docs/_static/sleep_strip_long.png" width="700" alt ="Sleep Monitoring Strip Overview" align="center" /></div>](https://bio-hdf-docs.readthedocs.io)
+[<div align="center"><img src="docs/_static/sleep_strip_long.png" width="700" alt ="Wearalbe Medical Monitor Overview" align="center" /></div>](https://bio-hdf-docs.readthedocs.io)
 
 * [Getting Started with wearable medical monitor](https://bio-hdf-docs.readthedocs.io/)
 * [Wearable medical monitor Hardware Reference](https://lceda.cn/editor#id=053828a3fcc842c6be50f1ebc4243324)
 
 * Sleep Strip PCBA Top:
-[<div align="center"><img src="docs/_static/sleep_strip/sleep_strip_pcba_top.png" width="700" alt ="Sleep Monitoring Strip PCBA top" align="center" /></div>](https://lceda.cn/seanfan/piezo_F58GF_esp32)
+[<div align="center"><img src="docs/_static/wmm/wmm_pcb_top.png" width="700" alt ="Wearalbe Medical Monitor PCBA top" align="center" /></div>](https://lceda.cn/editor#id=053828a3fcc842c6be50f1ebc4243324)
 * Sleep Strip PCBA Bottom:
-[<div align="center"><img src="docs/_static/sleep_strip/sleep_strip_pcba_bot.png" width="700" alt ="Sleep Monitoring Strip PCBA bottom" align="center" /></div>](https://lceda.cn/seanfan/piezo_F58GF_esp32)
+[<div align="center"><img src="docs/_static/wmm/wmm_pcb_bot.png" width="700" alt ="Wearalbe Medical Monitor PCBA bottom" align="center" /></div>](https://lceda.cn/editor#id=053828a3fcc842c6be50f1ebc4243324)
 
 #### Examples
 
