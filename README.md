@@ -74,7 +74,7 @@ it measures and transfers various types of bio-data such as ECG, BCG, EEG, RESP,
 #### Wearalbe Medical Monitor
 An open-source development board, supporting BIO-HDF and featuring contactless HR, RESP,Sleep,HRV and ...; Designed for wearable medical monitor application.
 
-[<div align="center"><img src="docs/_static/sleep_strip_long.png" width="700" alt ="Wearalbe Medical Monitor Overview" align="center" /></div>](https://bio-hdf-docs.readthedocs.io)
+[<div align="center"><img src="docs/_static/wmm/device1280X720.png" width="700" alt ="Wearalbe Medical Monitor Overview" align="center" /></div>](https://bio-hdf-docs.readthedocs.io)
 
 * [Getting Started with wearable medical monitor](https://bio-hdf-docs.readthedocs.io/)
 * [Wearable medical monitor Hardware Reference](https://lceda.cn/editor#id=053828a3fcc842c6be50f1ebc4243324)
